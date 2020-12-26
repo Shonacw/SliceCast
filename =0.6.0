@@ -1,0 +1,5 @@
+Requirement already satisfied: tensorflow_hub in /usr/local/lib/python3.6/dist-packages (0.4.0)
+Requirement already satisfied: protobuf>=3.4.0 in /usr/local/lib/python3.6/dist-packages (from tensorflow_hub) (3.7.1)
+Requirement already satisfied: six>=1.10.0 in /usr/local/lib/python3.6/dist-packages (from tensorflow_hub) (1.12.0)
+Requirement already satisfied: numpy>=1.12.0 in /usr/local/lib/python3.6/dist-packages (from tensorflow_hub) (1.16.3)
+Requirement already satisfied: setuptools in /usr/local/lib/python3.6/dist-packages (from protobuf>=3.4.0->tensorflow_hub) (50.3.2)
