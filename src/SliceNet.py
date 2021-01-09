@@ -3,21 +3,35 @@
 #######################################
 import os, re
 import tensorflow as tf
+import tensorflow.compat.v1 as tf
+#To make tf 2.0 compatible with tf1.0 code, we disable the tf2.0 functionalities
+tf.disable_eager_execution()
+tf.compat.v1.disable_v2_behavior()
 import tensorflow_hub as hub
 import numpy as np
-from src.netUtils import batchGen, getTestSet, customCatLoss
-from src.postprocess import pkHistory, pkbatch
+import importlib
+postprocess = importlib.import_module("SliceCast.src.postprocess")
+pkHistory = postprocess.pkHistory
+pkbatch = postprocess.pkbatch
+netUtils = importlib.import_module("SliceCast.src.netUtils")
+batchGen = netUtils.batchGen
+getTestSet = netUtils.getTestSet
+customCatLoss = netUtils.customCatLoss
+# from netUtils import batchGen, getTestSet, customCatLoss
+# from postprocess import pkHistory, pkbatch
 import h5py
 import matplotlib.pyplot as plt
 
 from keras.layers import Layer, Dense, Input, Lambda, Dropout, Flatten, multiply,\
     Bidirectional, Activation, TimeDistributed, Concatenate, merge, Reshape 
-from keras.layers import CuDNNLSTM as LSTM
+from keras.layers import LSTM
 from keras import Model, Sequential
 from keras import regularizers
 from keras.models import model_from_json
-import keras.backend as K
+from tensorflow.compat.v1.keras import backend as K
+
 from keras.callbacks import ModelCheckpoint
+
 
 # Import tensorflow hub module - Universal Sentence Encoder
 # More information can be found here:

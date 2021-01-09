@@ -1,6 +1,10 @@
 import h5py
 from pathlib import Path
-from src.spacyOps import createInferencePipe, createSpacyPipe
+import importlib
+spacyOps = importlib.import_module("SliceCast.src.spacyOps")
+createSpacyPipe = spacyOps.createSpacyPipe
+createInferencePipe = spacyOps.createInferencePipe
+#from spacyOps import createInferencePipe, createSpacyPipe
 import numpy as np
 import tensorflow as tf
 from keras.utils import Sequence, to_categorical
@@ -132,7 +136,7 @@ def customCatLoss(class_weights):
         weights = tf.reduce_sum(class_weights * onehot_labels, axis=-1)
 
         # compute (unweighted) softmax cross entropy loss
-        unweighted_losses = tf.nn.softmax_cross_entropy_with_logits_v2(labels=onehot_labels, logits=logits)
+        unweighted_losses = tf.nn.softmax_cross_entropy_with_logits(labels=onehot_labels, logits=logits)
 
         # apply the weights, relying on broadcasting of the multiplication
         weighted_losses = unweighted_losses * weights

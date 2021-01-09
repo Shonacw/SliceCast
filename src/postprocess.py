@@ -1,7 +1,10 @@
 import numpy as np
 import math
 import h5py
-from src.netUtils import getTestSet
+import importlib
+netUtils = importlib.import_module("SliceCast.src.netUtils")
+getTestSet = netUtils.getTestSet
+# from netUtils import getTestSet
 import keras
 import re
 import objectpath
