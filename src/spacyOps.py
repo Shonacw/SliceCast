@@ -30,12 +30,15 @@ def createInferencePipe():
         
     return nlp
 
-def customLabeler(doc):
+def customLabeler(content_sentences):
     """Custom slicecast pipeline component to add to spacy pipeline
     Searches document for the split indicator and creates labels according
     to this indicator.
+
+    # SGCW: updated input from doc -> content_sentences
+    sent.text.strip()  -> sent.strip()
     """
-    sents = [sent.text.strip() for sent in doc.sents] # Remove whitespace
+    sents = [sent.strip() for sent in content_sentences] # Remove whitespace
     sents = [sent for sent in sents if sent] # Remove empty strings
 
     numSents = len(sents)
@@ -45,7 +48,7 @@ def customLabeler(doc):
     startIdx = 0
     for i, sent in enumerate(sents):
         # Search for the split line and label it -1
-        if re.search('========,[0-9]+,.+\.', sent):
+        if re.search('========,[0-9]+,.+\.', sent): #'= = = = = = = = , 9,title .'
             if i-startIdx <= MIN_SENT:
                 # Label all sentences in last segment for removal
                 for j in range(startIdx, i):
@@ -76,12 +79,11 @@ def customLabeler(doc):
     else:
         idx = 0
 
-    data = {'sents':sents[idx:],
-            'labels':labels[idx:]}
+    #data = {'sents':sents[idx:], 'labels':labels[idx:]}
 
-    doc.user_data = data
+    #doc.user_data = data
     
-    return doc
+    return sents[idx:], labels[idx:] #doc
 
 def baseLabeler(doc):
     """Base SliceCast pipeline component to add to spacy pipeline.

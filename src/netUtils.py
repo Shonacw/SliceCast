@@ -165,4 +165,5 @@ def getSingleExample(fname, is_labeled=True):
     assert len(sents)>0, 'Document length is 0'
     
     sents = np.array(sents, dtype='object')
+
     return sents, labels
